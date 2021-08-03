@@ -16,7 +16,7 @@
     - name: Download the url
       get_url:
         url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
-        dest: /usr/share/springpetclinic/
+        dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
     - name: add user springbootuser
       ansible.builtin.user:
         name: springbootuser
@@ -26,7 +26,7 @@
         path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
         owner: springbootuser
         group: springbootuser
-        mode: 700
+        mode: 500
         state: file
     - name: copy service file
       ansible.builtin.copy:
