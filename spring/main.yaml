@@ -12,24 +12,24 @@
   tasks:
     - name: ensure java is installed
       ansible.builtin.apt:
-        name: {{ java_package }}
+        name: "{{ java_package }}"
         state: present
         update_cache: yes
     - name: creating a directory
       ansible.builtin.file:
-        path: {{ directory_path }}
+        path: "{{ directory_path }}"
         state: directory
     - name: Download the url
       get_url:
-        url: {{ download_url }}
-        dest: {{ destination_path }}
+        url: "{{ download_url }}"
+        dest: "{{ destination_path }}"
     - name: add user springbootuser
       ansible.builtin.user:
         name: springbootuser
         state: present
     - name: change file owner
       ansible.builtin.file:
-        path: {{ destination_path }}
+        path: "{{ destination_path }}"
         owner: springbootuser
         group: springbootuser
         mode: 500
