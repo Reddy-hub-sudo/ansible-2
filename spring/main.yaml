@@ -33,7 +33,7 @@
         src: service
         dest: /etc/systemd/system/service
     - name: enable and start service
-      ansible.builtin.service:
+      ansible.builtin.systemd:
         name: service
         enabled: yes
         state: started
