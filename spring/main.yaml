@@ -30,8 +30,8 @@
         state: file
     - name: copy service file
       ansible.builtin.copy:
-        src: service
-        dest: /etc/systemd/system/service
+        src: 'springpetclinic.service'
+        dest: /etc/systemd/springpetclinic.service
     - name: enable and start service
       ansible.builtin.systemd:
         name: springpetclinic.service
