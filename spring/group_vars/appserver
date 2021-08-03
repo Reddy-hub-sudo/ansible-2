@@ -1,2 +1,5 @@
 ---
-test_var2: this is for group
+java_package: openjdk-11-jdk
+directory_path: /usr/share/springpetclinic
+download_url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+destination_path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
