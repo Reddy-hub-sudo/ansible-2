@@ -3,27 +3,33 @@
   hosts: appserver
   become: yes
 
+  vars:
+    java_package: openjdk-11-jdk
+    directory_path: /usr/share/springpetclinic
+    download_url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+    destination_path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+
   tasks:
     - name: ensure java is installed
       ansible.builtin.apt:
-        name: openjdk-11-jdk
+        name: {{ java_package }}
         state: present
         update_cache: yes
     - name: creating a directory
       ansible.builtin.file:
-        path: /usr/share/springpetclinic
+        path: {{ directory_path }}
         state: directory
     - name: Download the url
       get_url:
-        url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
-        dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+        url: {{ download_url }}
+        dest: {{ destination_path }}
     - name: add user springbootuser
       ansible.builtin.user:
         name: springbootuser
         state: present
     - name: change file owner
       ansible.builtin.file:
-        path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+        path: {{ destination_path }}
         owner: springbootuser
         group: springbootuser
         mode: 500
