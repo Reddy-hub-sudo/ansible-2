@@ -34,7 +34,6 @@
         dest: /etc/systemd/springpetclinic.service
     - name: enable and start service
       ansible.builtin.systemd:
-        src: /etc/systemd/springpetclinic.service
-        name: 'springpetclinic.service'
+        name: /etc/systemd/springpetclinic.service
         enabled: yes
         state: started
