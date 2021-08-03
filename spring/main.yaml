@@ -29,8 +29,9 @@
         mode: 700
         state: file
     - name: copy service file
-      src: . service
-      dest: /usr/share/springpetclinic/
+      ansible.builtin.copy:
+        src: . service
+        dest: /usr/share/springpetclinic/
     - name: enable and start service
       ansible.builtin.service:
         name: spring-petclinic
