@@ -33,5 +33,5 @@
     
     - name: enable and start service
       ansible.builtin.systemd:
-        name: apache2
+        name: "{{ webserver }}"
         state: restarted

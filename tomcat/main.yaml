@@ -1,0 +1,70 @@
+- name: lamp
+  hosts: appserver
+  become: yes
+
+  tasks:
+    - name: this play book works only on ubuntu and CentOS
+      fail:
+        msg: works only on Ubuntu and CentOS
+      when:
+        - ansible_facts['distribution'] != "Ubuntu"
+        - ansible_facts['distribution'] != "CentOS"
+
+    - name: ensure java is installed on Ubuntu
+      ansible.builtin.apt:
+        name: "{{ java_package }}"
+        state: present
+        update_cache: yes
+      when: ansible_facts['distribution'] == "Ubuntu"
+
+    - name: debug msg for java installation
+      debug:
+        msg: java package is installed
+
+    - name: Ensure group "tomcat" exists
+      ansible.builtin.group:
+        name: tomcat
+        state: present
+
+    - name: Add the user Tomcat
+      ansible.builtin.user:
+        name: tomcat
+        group: tomcat
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /tmp
+        state: directory
+    
+    - name: Download file with check (sha256)
+      get_url:
+        url: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.50/bin/apache-tomcat-9.0.50.tar.gz
+        dest: /tmp
+    
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /opt/tomcat
+        state: directory
+
+    - name: Extract tomcat
+      ansible.builtin.unarchive:
+        src: /tmp/apache-tomcat-9.0.50.tar.gz
+        dest: /opt/tomcat/apache-tomcat-9.0.50.tar.gz
+
+    - name: Give insecure permissions to an existing file
+      ansible.builtin.file:
+        path: /opt/tomcat/apache-tomcat-9.0.50.tar.gz
+        owner: tomcat
+        group: tomcat
+        mode: '700'
+
+    - name: copy service file
+      ansible.builtin.copy:
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+    
+    - name: enable and start service
+      ansible.builtin.systemd:
+        name: tomcat.service
+        state: started
+        enabled: yes
