@@ -35,6 +35,8 @@
       ansible.builtin.user:
         name: tomcat
         group: tomcat
+        home: /opt/tomcat
+        shell: /bin/false
 
     - name: Create a directory if it does not exist
       ansible.builtin.file:
