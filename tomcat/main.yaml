@@ -61,7 +61,7 @@
 
     - name: Extract tomcat
       ansible.builtin.unarchive:
-        src: /tmp/apache-tomcat-9.0.50.tar.gz
+        src: files.tar.gz
         dest: /opt/tomcat/apache-tomcat-9.0.50.tar.gz
 
     - name: Give insecure permissions to an existing file
