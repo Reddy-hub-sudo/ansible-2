@@ -1,0 +1,41 @@
+- name: lamp
+  hosts: appserver
+  become: yes
+
+  tasks:
+    - name: this play book works only on ubuntu and CentOS
+      fail:
+        msg: works only on Ubuntu and CentOS
+      when:
+        - ansible_facts['distribution'] != "Ubuntu"
+        - ansible_facts['distribution'] != "CentOS"
+
+    - name: ensure apache is installed on Ubuntu
+      ansible.builtin.apt:
+        name: "{{ apache_package }}"
+        state: present
+        update_cache: yes
+      when: ansible_facts['distribution'] == "Ubuntu"
+
+    - name: debug msg for apache installation
+      debug:
+        msg: apache package is installed
+
+    - name: ensure php package is installed on Ubuntu
+      ansible.builtin.apt:
+        name:
+          - php
+          - libapache2-mod-php
+          - php-mysql
+          - php-cli -y
+        state: present
+
+    - name: copy info file
+      ansible.builtin.copy:
+        src: info.php
+        dest: /var/www/html/info.php
+    
+    - name: enable and start service
+      ansible.builtin.systemd:
+        name: apache2
+        state: restarted
