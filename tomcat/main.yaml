@@ -56,7 +56,7 @@
         path: /tmp/apache-tomcat-9.0.50.tar.gz
         owner: tomcat
         group: tomcat
-        mode: '700'
+        mode: '777'
 
 
     - name: Extract tomcat
