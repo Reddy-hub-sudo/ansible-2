@@ -17,6 +17,11 @@
         update_cache: yes
       when: ansible_facts['distribution'] == "Ubuntu"
 
+    - name: unzip is installed on Ubuntu
+      ansible.builtin.apt:
+        name: xz-utils
+        state: present
+
     - name: debug msg for java installation
       debug:
         msg: java package is installed
