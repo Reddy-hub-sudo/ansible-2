@@ -23,11 +23,7 @@
 
     - name: ensure php package is installed on Ubuntu
       ansible.builtin.apt:
-        name:
-          - php
-          - libapache2-mod-php
-          - php-mysql
-          - php-cli
+        name: "{{ php_packages }}"
         state: present
 
     - name: copy info file
