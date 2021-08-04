@@ -53,7 +53,7 @@
 
     - name: Give insecure permissions to an existing file
       ansible.builtin.file:
-        path: /opt/tomcat/apache-tomcat-9.0.50.tar.gz
+        path: /tmp/apache-tomcat-9.0.50.tar.gz
         owner: tomcat
         group: tomcat
         mode: '700'
@@ -63,6 +63,13 @@
       ansible.builtin.unarchive:
         src: /tmp/apache-tomcat-9.0.50.tar.gz
         dest: /opt/tomcat/apache-tomcat-9.0.50.tar.gz
+
+    - name: Give insecure permissions to an existing file
+      ansible.builtin.file:
+        path: /opt/tomcat/apache-tomcat-9.0.50.tar.gz
+        owner: tomcat
+        group: tomcat
+        mode: '700'
     - name: copy service file
       ansible.builtin.copy:
         src: tomcat.service
