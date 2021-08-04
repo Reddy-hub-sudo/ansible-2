@@ -27,7 +27,7 @@
           - php
           - libapache2-mod-php
           - php-mysql
-          - php-cli -y
+          - php-cli
         state: present
 
     - name: copy info file
