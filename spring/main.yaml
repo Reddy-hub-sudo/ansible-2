@@ -1,6 +1,6 @@
 ---
 - name: spring-petclinic
-  hosts: ubuntu
+  hosts: appserver
   become: yes
 
   tasks:
@@ -13,7 +13,7 @@
 
     - name: ensure java is installed on Ubuntu
       ansible.builtin.apt:
-        name: "{{ java_packages }}"
+        name: "{{ java_package }}"
         state: present
         update_cache: yes
       when: ansible_facts['distribution'] == "Ubuntu"
