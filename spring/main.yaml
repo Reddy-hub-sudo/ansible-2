@@ -4,11 +4,19 @@
   become: yes
 
   tasks:
+    - name: this play book works only on ubuntu
+      fail:
+        msg: works only on Ubuntu
+      when: (ansible_facts['distribution'] != "Ubuntu")
     - name: ensure java is installed
       ansible.builtin.apt:
         name: "{{ java_package }}"
         state: present
         update_cache: yes
+    - name: debug msg for java installation
+      debug:
+        msg: java package is installed
+
     - name: creating a directory
       ansible.builtin.file:
         path: "{{ directory_path }}"
