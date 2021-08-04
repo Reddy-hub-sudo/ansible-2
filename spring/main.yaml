@@ -1,6 +1,6 @@
 ---
 - name: spring-petclinic
-  hosts: "104.198.140.133, 34.69.174.215"
+  hosts: ubuntu
   become: yes
 
   tasks:
