@@ -1,7 +1,12 @@
 ---
 - name: spring-petclinic
-  hosts: all
+  hosts: appserver
   become: yes
   roles:
     - spc 
+- name: lamp
+  hosts: webserver
+  become: yes
+  roles:
+    - lamp
   
