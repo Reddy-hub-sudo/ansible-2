@@ -1,0 +1,58 @@
+---
+- name: this play book works only on ubuntu and CentOS
+  fail:
+    msg: works only on Ubuntu and CentOS
+  when:
+    - ansible_facts['distribution'] != "Ubuntu"
+    - ansible_facts['distribution'] != "CentOS"
+- name: ensure java is installed on Ubuntu
+  ansible.builtin.apt:
+    name: "{{ java_package }}"
+    state: present
+    update_cache: yes
+  when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: debug msg for java installation
+  debug:
+    msg: java package is installed
+    
+- name: ensure java is installed on CentOS
+  ansible.builtin.yum:
+    name: "{{ java_package }}"
+    state: present
+    update_cache: yes
+  when: ansible_facts['distribution'] == "CentOS"
+
+- name: creating a directory
+  ansible.builtin.file:
+    path: "{{ directory_path }}"
+    state: directory
+
+- name: Download the url
+  get_url:
+    url: "{{ download_url }}"
+    dest: "{{ destination_path }}"
+
+- name: add user springbootuser
+  ansible.builtin.user:
+    name: springbootuser
+    state: present
+
+- name: change file owner
+  ansible.builtin.file:
+    path: "{{ destination_path }}"
+    owner: springbootuser
+    group: springbootuser
+    mode: 500
+    state: file
+
+- name: copy service file
+  ansible.builtin.copy:
+    src: springpetclinic.service
+    dest: /etc/systemd/system/springpetclinic.service
+
+- name: enable and start service
+  ansible.builtin.systemd:
+    name: springpetclinic.service
+    state: started
+    enabled: yes

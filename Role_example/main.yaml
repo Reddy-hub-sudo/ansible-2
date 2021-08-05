@@ -1,0 +1,7 @@
+---
+- name: spring-petclinic
+  hosts: all
+  become: yes
+  roles:
+    - spc 
+  
